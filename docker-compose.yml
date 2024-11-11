@@ -5,25 +5,38 @@ services:
     environment:
       - TZ=Asia/Tokyo
     env_file:
-      - ./.env
+      - ./postgres/.env
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-  python:
+  flask:
+    image: kojamad28/postgres-flask
+    container_name: flask
     build: 
       context: .
       args:
         REQ_TXT: "requirements.txt"
-    image: kojamad28/basic-postgres-python
-    container_name: python
-    command: /bin/bash
+    command: gunicorn main:app -b 0.0.0.0:5000
     volumes:
-     - .:/usr/src/app
-    tty: true
-    stdin_open: true
+      - .:/usr/src/app
+    expose:
+      - "5000"
+    env_file:
+      - ./instance/.env.dev
     depends_on:
       - postgres
+  nginx:
+    image: kojamad28/flask-nginx
+    container_name: nginx
+    build: ./nginx
+    volumes:
+      - ./app/static:/usr/src/app/static
+      - ./app/media:/usr/src/app/media
+    ports:
+      - "80:80"
+    depends_on:
+      - flask
 
 volumes:
   postgres_data:
