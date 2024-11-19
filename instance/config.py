@@ -8,14 +8,14 @@ DEBUG = app_config.get('DEBUG', 'false').lower() == 'true'
 
 SECRET_KEY = app_config['SECRET_KEY']
 
-SQLALCHEMY_DATABASE_URI = URL.create(
-        'postgresql+psycopg',
+DATABASE_URL = URL.create(
+        'postgresql',
         username=app_config['DATABASE_USER'],
         password=app_config['DATABASE_PASSWORD'],  # plain (unescaped) text
-        host=app_config['DATABASE_HOST'],
-        port=app_config['DATABASE_PORT'],
-        database=app_config['DATABASE_DB'],
-        query={'options': f'-c search_path={app_config["DATABASE_SCHEMA"]}'},
+        host=app_config.get('DATABASE_HOST', 'postgres'),
+        port=app_config.get('DATABASE_PORT', '5432'),
+        database=app_config.get('DATABASE_DB', 'postgres'),
+        query={'options': f'-c search_path={app_config.get("DATABASE_SCHEMA", "public")}'},
 )
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False

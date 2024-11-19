@@ -9,7 +9,7 @@ from psycopg.rows import dict_row
 def get_db():
     if 'db' not in g:
         g.db = psycopg.connect(
-            current_app.config['SQLALCHEMY_DATABASE_URI'],
+            str(current_app.config['DATABASE_URL']),
             cursor_factory=dict_row
         )
 
@@ -52,18 +52,6 @@ def init_db_command():
     init_db()
     click.echo('Initialized the database.')
 
-"""
-def datetime_decoder(value):
-    return value.isoformat()
-
-psycopg.adapters.register_dumper(datetime, datetime_decoder)
-
-
-def timestamp_decoder(value):
-    return datetime.fromisoformat(value)
-
-psycopg.adapters.register_dumpter(datetime, timestamp_decoder)
-"""
 
 def init_app(app):
     app.teardown_appcontext(close_db)
