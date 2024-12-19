@@ -8,6 +8,7 @@ Flask
 flask-sqlalchemy
 gunicorn
 structlog
-pytest
+pytest-flask
 pytest-randomly
 pytest-cov
+pytest-structlog
