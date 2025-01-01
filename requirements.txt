@@ -1,14 +1,1 @@
-black
-ruff
-mypy
-tox
-psycopg
-python-dotenv
-Flask
-flask-sqlalchemy
-gunicorn
-structlog
-pytest-flask
-pytest-randomly
-pytest-cov
-pytest-structlog
+-r requirements/prod.txt
