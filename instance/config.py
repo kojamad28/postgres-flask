@@ -1,8 +1,12 @@
+from pathlib import Path
+
 from dotenv import dotenv_values
 from sqlalchemy import URL
 
-#app_config = dotenv_values('instance/.env.dev')
-app_config = dotenv_values('instance/.env')
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+#app_config = dotenv_values(BASE_DIR / 'instance' / '.env.dev')
+app_config = dotenv_values(BASE_DIR / 'instance' / '.env')
 
 DEBUG = app_config.get('DEBUG', 'false').lower() == 'true'
 
