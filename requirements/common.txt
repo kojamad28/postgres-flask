@@ -1,6 +1,4 @@
-psycopg
 python-dotenv
-Flask
+psycopg
 flask-sqlalchemy
-gunicorn
 structlog
