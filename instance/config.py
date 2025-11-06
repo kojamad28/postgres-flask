@@ -4,7 +4,11 @@ from pathlib import Path
 from dotenv import dotenv_values
 from sqlalchemy import URL
 
-DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
+
+def read_boolean(value: str) -> bool:
+    return value.lower() in ('true', 't', 'yes', 'y', 'on', '1')
+
+DEBUG = read_boolean(str(os.environ.get('DEBUG', 'False')))
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
