@@ -1,14 +1,17 @@
+import os
 from pathlib import Path
 
 from dotenv import dotenv_values
 from sqlalchemy import URL
 
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-#app_config = dotenv_values(BASE_DIR / 'instance' / '.env.dev')
-app_config = dotenv_values(BASE_DIR / 'instance' / '.env')
-
-DEBUG = app_config.get('DEBUG', 'false').lower() == 'true'
+if DEBUG:
+    app_config = dotenv_values(BASE_DIR / 'instance' / '.env.dev')
+else:
+    app_config = dotenv_values(BASE_DIR / 'instance' / '.env')
 
 SECRET_KEY = app_config['SECRET_KEY']
 
